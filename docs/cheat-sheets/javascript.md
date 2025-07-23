@@ -103,6 +103,12 @@ function logAll(...args) {
 
 ## Classes & Inheritance
 
+The `prototype` is king
+
+![img.png](img/js-prototype-model.png)
+
+Classes are just syntactic sugar
+
 ```js
 class Animal {
   constructor(name) {
