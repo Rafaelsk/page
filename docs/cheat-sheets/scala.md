@@ -1,3 +1,5 @@
+[← Back to Index](../index.md)
+
 # Scala Cheat Sheet
 
 ## Evaluation Rules

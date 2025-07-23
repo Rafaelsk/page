@@ -1,3 +1,5 @@
+[← Back to Index](../index.md)
+
 # Rust Cheat Sheet
 
 A minimal, senior-style reference for when I eventually get serious with Rust.  

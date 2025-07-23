@@ -1,3 +1,5 @@
+[← Back to Index](../index.md)
+
 # TypeScript Cheat Sheet
 
 ## Type System Overview
