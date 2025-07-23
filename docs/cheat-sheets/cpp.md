@@ -29,9 +29,33 @@ public:
 };
 ```
 
+RAII ensures resources are released even if exceptions are thrown:
+
+```cpp
+class FileWrapper {
+  std::ofstream f;
+public:
+  FileWrapper(const std::string& path) : f(path) {}
+  ~FileWrapper() { f.close(); }
+};
+
+void doWork() {
+  FileWrapper log("out.txt");
+  riskyFunction();  // Even if this throws, destructor runs
+}
+```
+
 ---
 
 ## Memory Management
+
+Stack allocation is automatic:
+
+```cpp
+int x = 42;  // stored on the stack
+```
+
+Heap allocation is manual (or smart-pointer-managed):
 
 ```cpp
 int* p = new int(42);
@@ -79,7 +103,8 @@ Capture local variables:
 
 ```cpp
 int base = 10;
-auto add = [base](int x) { return x + base; };
+auto byValue = [base](int x) { return x + base; };  // captured by value
+auto byRef   = [&base](int x) { return x + base; }; // captured by reference
 ```
 
 ---
@@ -162,12 +187,15 @@ public:
 
 ---
 
-## Constexpr & Inline (Modern C++)
+## Constexpr vs Const
 
-- `constexpr`: evaluates expressions at compile time.
-- `inline`: avoids multiple definition errors in headers.
+- `const` means the value cannot be changed after initialization (runtime constant).
+- `constexpr` means the value is computed at compile time (build-time constant).
 
 ```cpp
+const int runtime = std::time(nullptr);  // evaluated at runtime
+constexpr int compileTime = 5 * 5;       // evaluated at compile time
+
 constexpr int square(int x) { return x * x; }
 ```
 
@@ -214,9 +242,24 @@ class MyClass { ... };
 #include "MyClass.h"
 ```
 
-Compile:
+Modern C++ development uses **CMake** to configure builds and **Conan** for dependency management:
+
+```cmake
+# CMakeLists.txt
+cmake_minimum_required(VERSION 3.20)
+project(my_project)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(my_app src/main.cpp)
+```
+
+Then:
+
 ```bash
-g++ main.cpp MyClass.cpp -o app -std=c++20 -O2
+conan install . --output-folder=build --build=missing
+cmake -S . -B build
+cmake --build build
 ```
 
 ---
@@ -254,4 +297,3 @@ std::lock_guard<std::mutex> guard(m);
 - Use `enum class` instead of raw enums
 
 ---
-
