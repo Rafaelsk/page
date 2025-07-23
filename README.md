@@ -1,3 +1,2 @@
-# Cheat Sheets
-
-- [Scala](./docs/scala.md) 
+Stuff I need available online
+- Cheatsheets
